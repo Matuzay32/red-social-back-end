@@ -48,7 +48,7 @@ export class UsersService {
     }
   }
 
-  async findOne(id: number): Promise<CreateUserInterface> {
+  async findOne(id: string): Promise<CreateUserInterface> {
     try {
       return this.userModel.findById(id);
     } catch (error) {
@@ -63,7 +63,7 @@ export class UsersService {
   }
 
   async update(
-    id: number,
+    id: string,
     updateUserDto: UpdateUserDto,
   ): Promise<CreateUserInterface> {
     try {
@@ -79,7 +79,7 @@ export class UsersService {
     }
   }
 
-  async remove(id: number): Promise<CreateUserInterface> {
+  async remove(id: string): Promise<CreateUserInterface> {
     try {
       return this.userModel.findByIdAndDelete(id);
     } catch (error) {
