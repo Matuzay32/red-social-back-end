@@ -1,10 +1,19 @@
 version: '3'
 services:
   web:
-    container_name: back-red-social
-    build: .
+    container_name: red-social-back
     ports:
       - '3000:3000'
+    build: .
+    volumes:
+      - uploads:/app/uploads
     restart: always
     links:
-      - mongo
+      - 'mongo'
+  mongo:
+  container_name: DB-MONGO
+  image: mongo
+  ports:
+    - '27017:27017'
+  logging:
+    driver: 'none'
