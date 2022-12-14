@@ -10,30 +10,6 @@ import { CreateUserInterface } from './interface/create-user.interface';
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  async create(createUserDto: CreateUserDto): Promise<CreateUserInterface> {
-    try {
-      const user = await this.userModel.create(createUserDto);
-      return user;
-    } catch (error) {
-      if (error.code === 11000) {
-        throw new HttpException(
-          {
-            status: HttpStatus.NOT_FOUND,
-            error: 'El usuario ya existe no es posible crearlo nuevamente',
-          },
-          HttpStatus.NOT_FOUND,
-        );
-      }
-      throw new HttpException(
-        {
-          status: HttpStatus.NOT_FOUND,
-          error: 'No fue posible crear el usuario',
-        },
-        HttpStatus.NOT_FOUND,
-      );
-    }
-  }
-
   async findAll(): Promise<CreateUserInterface[]> {
     try {
       return this.userModel.find({}).sort({ createdAt: -1 });
