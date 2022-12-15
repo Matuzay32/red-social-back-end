@@ -20,7 +20,7 @@ export class AuthService {
     const { password } = userObject;
     const plainPass = await hash(password, 10);
     const usuarioEncriptado = { ...userObject, password: plainPass };
-    return this.userModel.insertMany(usuarioEncriptado);
+    return this.userModel.create(usuarioEncriptado);
   }
 
   //Comparamos el usuario con el que tenemos en la base de datos

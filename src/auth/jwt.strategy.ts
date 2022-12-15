@@ -11,7 +11,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       ignoreExpiration: false,
       secretOrKey: 'semilla',
     });
-    const dbHost = this.configService.get<string>('SEMILLA');
   }
   async validate(payload: any) {
     return { userId: payload.id, username: payload.username };
