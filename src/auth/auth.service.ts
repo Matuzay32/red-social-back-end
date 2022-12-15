@@ -6,11 +6,13 @@ import { LoginAuthDto } from './dto/login-auth.dto';
 import { RegisterAuthDto } from './dto/register-auth.dto';
 import { hash, compare } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 @Injectable()
 export class AuthService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private jwtServie: JwtService,
+    private configService: ConfigService,
   ) {}
 
   //Usamos bcrypt para encryptar la password
@@ -33,6 +35,7 @@ export class AuthService {
 
     if (!checkPass)
       throw new HttpException('PASSWORD_INCORRECT', HttpStatus.FORBIDDEN);
+
     const payload = { id: findUser._id, username: findUser.username };
 
     const token = await this.jwtServie.sign(payload);
