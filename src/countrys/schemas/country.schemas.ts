@@ -11,9 +11,6 @@ export class Country {
 
   @Prop({ required: true, unique: true })
   preffix: string;
-
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  user_id: User;
 }
 
 export const CountrySchema = SchemaFactory.createForClass(Country);
