@@ -16,6 +16,9 @@ export class User {
 
   @Prop({ default: new Date(Date.now()) })
   createdAt: Date;
+
+  @Prop({ default: 0 })
+  isAdmin: 0;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
