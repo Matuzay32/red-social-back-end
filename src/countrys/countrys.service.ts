@@ -5,6 +5,7 @@ import { Country, CountryDocument } from './schemas/country.schemas';
 import { Model } from 'mongoose';
 
 import { InjectModel } from '@nestjs/mongoose';
+import { CreateCountryInterface } from './countrys.interface';
 
 @Injectable()
 export class CountrysService {
@@ -12,7 +13,9 @@ export class CountrysService {
     @InjectModel(Country.name) private countryModel: Model<CountryDocument>,
   ) {}
 
-  async create(createCountryDto: CreateCountryDto) {
+  async create(
+    createCountryDto: CreateCountryDto,
+  ): Promise<CreateCountryInterface> {
     try {
       const country = await this.countryModel.create(createCountryDto);
       return country;
@@ -25,7 +28,7 @@ export class CountrysService {
     }
   }
 
-  async findAll() {
+  async findAll(): Promise<CreateCountryInterface[]> {
     try {
       const countrys = await this.countryModel.find({}).sort({ name: 1 });
       return countrys;
@@ -38,7 +41,7 @@ export class CountrysService {
     }
   }
 
-  async findOne(id: string) {
+  async findOne(id: string): Promise<CreateCountryInterface> {
     try {
       const country = await this.countryModel.findById(id);
       return country;
@@ -51,7 +54,10 @@ export class CountrysService {
     }
   }
 
-  async update(id: number, updateCountryDto: UpdateCountryDto) {
+  async update(
+    id: string,
+    updateCountryDto: UpdateCountryDto,
+  ): Promise<CreateCountryInterface> {
     try {
       const country = await this.countryModel.findByIdAndUpdate(
         id,
@@ -67,7 +73,7 @@ export class CountrysService {
     }
   }
 
-  async remove(id: number) {
+  async remove(id: string): Promise<CreateCountryInterface> {
     try {
       const country = await this.countryModel.findById(id);
       return country;
