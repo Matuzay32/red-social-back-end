@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { CountrysModule } from './countrys/countrys.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { ConfigModule } from '@nestjs/config';
     MongooseModule.forRoot('mongodb://localhost/api'),
     AuthModule,
     ConfigModule.forRoot({ ignoreEnvFile: false, isGlobal: true }),
+    CountrysModule,
   ],
   controllers: [AppController],
   providers: [AppService],
