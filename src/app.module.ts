@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { CountrysModule } from './countrys/countrys.module';
 import { DistributionsModule } from './distributions/distributions.module';
+import { SentimentalModule } from './sentimental/sentimental.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { DistributionsModule } from './distributions/distributions.module';
     ConfigModule.forRoot({ ignoreEnvFile: false, isGlobal: true }),
     CountrysModule,
     DistributionsModule,
+    SentimentalModule,
   ],
   controllers: [AppController],
   providers: [AppService],

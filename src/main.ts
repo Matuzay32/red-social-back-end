@@ -8,16 +8,19 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .addBearerAuth()
-    .setTitle('Api documentation')
+    .setTitle('Red social documentacion')
     .setDescription('Esta api simula una red social')
     .setVersion('1.0')
     .addTag('users')
     .addTag('countrys')
+    .addTag('sentimental')
     .addTag('auth')
     .addTag('distributions')
     .build();
+
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('documentation', app, document);
+
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(3001);
 }

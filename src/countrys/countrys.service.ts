@@ -75,7 +75,7 @@ export class CountrysService {
 
   async remove(id: string): Promise<CreateCountryInterface> {
     try {
-      const country = await this.countryModel.findById(id);
+      const country = await this.countryModel.findByIdAndDelete(id);
       return country;
     } catch (error) {
       console.log(error);
