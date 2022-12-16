@@ -14,9 +14,9 @@ export class CreateProfileDto {
   @ApiProperty()
   bio: String;
   @ApiProperty()
-  likes: String;
+  likes: Number;
   @ApiProperty()
-  dislikes: String;
+  dislikes: Number;
   @ApiProperty()
   publicEmail: String;
   @ApiProperty()

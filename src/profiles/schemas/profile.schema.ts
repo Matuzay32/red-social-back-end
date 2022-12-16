@@ -28,9 +28,9 @@ export class Profile {
   @Prop({ required: true, default: 'Bio default' })
   bio: string;
   @Prop({ default: 0 })
-  likes: string;
+  likes: number;
   @Prop({ default: 0 })
-  dislikes: string;
+  dislikes: number;
   @Prop()
   publicEmail: string;
 
