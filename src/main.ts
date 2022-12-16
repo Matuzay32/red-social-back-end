@@ -15,6 +15,7 @@ async function bootstrap() {
     .addTag('countrys')
     .addTag('sentimental')
     .addTag('auth')
+    .addTag('profiles')
     .addTag('distributions')
     .build();
 
