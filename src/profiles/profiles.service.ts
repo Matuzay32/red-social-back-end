@@ -1,6 +1,6 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { Profile, ProfileDocument } from './schemas/profile.schema';
@@ -32,36 +32,39 @@ export class ProfilesService {
             from: 'users', //la tabla a la que ser quiere unir
             localField: 'userId', //seria la clave a la que ser referenciar casi siempre seria id
             foreignField: '_id', // esta seria la equivalente a la clave foranea
-            as: 'datosUsuario',
+            as: 'usuario',
           },
         },
-
+        { $unwind: '$usuario' },
         {
           $lookup: {
             from: 'sentimentals', //la tabla a la que ser quiere unir
             localField: 'sentimentalId', //seria la clave a la que ser referenciar casi siempre seria id
             foreignField: '_id', // esta seria la equivalente a la clave foranea
-            as: 'datosSentimental',
+            as: 'sentimental',
           },
         },
+        { $unwind: '$sentimental' },
 
         {
           $lookup: {
             from: 'distributions', //la tabla a la que ser quiere unir
             localField: 'distributionId', //seria la clave a la que ser referenciar casi siempre seria id
             foreignField: '_id', // esta seria la equivalente a la clave foranea
-            as: 'datosDistribution',
+            as: 'distribution',
           },
         },
+        { $unwind: '$distribution' },
 
         {
           $lookup: {
             from: 'countries', //la tabla a la que ser quiere unir
             localField: 'countryId', //seria la clave a la que ser referenciar casi siempre seria id
             foreignField: '_id', // esta seria la equivalente a la clave foranea
-            as: 'datosCountry',
+            as: 'country',
           },
         },
+        { $unwind: '$country' },
       ]);
       return profile;
     } catch (error) {
@@ -75,7 +78,49 @@ export class ProfilesService {
 
   async findOne(id: string): Promise<any> {
     try {
-      const profile = await this.profileModel.findById(id);
+      const profile = await this.profileModel.aggregate([
+        {
+          $match: { _id: new mongoose.Types.ObjectId(id) },
+        },
+        {
+          $lookup: {
+            from: 'users', //la tabla a la que ser quiere unir
+            localField: 'userId', //seria la clave a la que ser referenciar casi siempre seria id
+            foreignField: '_id', // esta seria la equivalente a la clave foranea
+            as: 'usuario',
+          },
+        },
+        { $unwind: '$usuario' },
+        {
+          $lookup: {
+            from: 'sentimentals', //la tabla a la que ser quiere unir
+            localField: 'sentimentalId', //seria la clave a la que ser referenciar casi siempre seria id
+            foreignField: '_id', // esta seria la equivalente a la clave foranea
+            as: 'sentimental',
+          },
+        },
+        { $unwind: '$sentimental' },
+
+        {
+          $lookup: {
+            from: 'distributions', //la tabla a la que ser quiere unir
+            localField: 'distributionId', //seria la clave a la que ser referenciar casi siempre seria id
+            foreignField: '_id', // esta seria la equivalente a la clave foranea
+            as: 'distribution',
+          },
+        },
+        { $unwind: '$distribution' },
+
+        {
+          $lookup: {
+            from: 'countries', //la tabla a la que ser quiere unir
+            localField: 'countryId', //seria la clave a la que ser referenciar casi siempre seria id
+            foreignField: '_id', // esta seria la equivalente a la clave foranea
+            as: 'country',
+          },
+        },
+        { $unwind: '$country' },
+      ]);
       return profile;
     } catch (error) {
       console.log(error);
