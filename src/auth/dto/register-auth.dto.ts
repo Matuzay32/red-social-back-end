@@ -17,16 +17,12 @@ export class RegisterAuthDto extends PartialType(LoginAuthDto) {
   username: String;
 
   @IsNotEmpty()
-  @MaxLength(12)
-  @MinLength(4)
   @ApiProperty()
   nombre: String;
 
   @IsNotEmpty()
-  @MaxLength(12)
-  @MinLength(4)
   @ApiProperty()
-  Apellido: String;
+  apellido: String;
 
   @ApiProperty()
   @IsNotEmpty()

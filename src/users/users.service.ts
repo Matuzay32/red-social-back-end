@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User, UserSchema, UserDocument } from './schemas/user.schema';
@@ -12,7 +12,20 @@ export class UsersService {
 
   async findAll(): Promise<CreateUserInterface[]> {
     try {
-      return this.userModel.find({}).sort({ createdAt: -1 });
+      // return this.userModel.find({}).sort({ createdAt: -1 });
+
+      const user = await this.userModel.aggregate([
+        {
+          $lookup: {
+            from: 'countries', //la tabla a la que ser quiere unir
+            localField: 'pais', //seria la clave a la que ser referenciar casi siempre seria id
+            foreignField: '_id', // esta seria la equivalente a la clave foranea
+            as: 'country',
+          },
+        },
+        { $unwind: '$country' },
+      ]);
+      return user;
     } catch (error) {
       throw new HttpException(
         {
@@ -24,9 +37,24 @@ export class UsersService {
     }
   }
 
-  async findOne(id: string): Promise<CreateUserInterface> {
+  async findOne(id: string): Promise<CreateUserInterface[]> {
     try {
-      return this.userModel.findById(id);
+      const profile = await this.userModel.aggregate([
+        {
+          $match: { _id: new mongoose.Types.ObjectId(id) },
+        },
+
+        {
+          $lookup: {
+            from: 'countries', //la tabla a la que ser quiere unir
+            localField: 'pais', //seria la clave a la que ser referenciar casi siempre seria id
+            foreignField: '_id', // esta seria la equivalente a la clave foranea
+            as: 'country',
+          },
+        },
+        { $unwind: '$country' },
+      ]);
+      return profile;
     } catch (error) {
       throw new HttpException(
         {
