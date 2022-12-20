@@ -12,20 +12,39 @@ export class UsersService {
 
   async findAll(): Promise<CreateUserInterface[]> {
     try {
-      // return this.userModel.find({}).sort({ createdAt: -1 });
-
-      const user = await this.userModel.aggregate([
+      const users = await this.userModel.aggregate([
         {
           $lookup: {
             from: 'countries', //la tabla a la que ser quiere unir
             localField: 'countryId', //seria la clave a la que ser referenciar casi siempre seria id
             foreignField: '_id', // esta seria la equivalente a la clave foranea
-            as: 'countrys',
+            as: 'country',
           },
         },
-        { $unwind: '$countrys' },
+        { $unwind: '$country' },
+
+        {
+          $lookup: {
+            from: 'sentimentals', //la tabla a la que ser quiere unir
+            localField: 'sentimentalId', //seria la clave a la que ser referenciar casi siempre seria id
+            foreignField: '_id', // esta seria la equivalente a la clave foranea
+            as: 'sentimentals',
+          },
+        },
+        { $unwind: '$sentimentals' },
+
+        {
+          $lookup: {
+            from: 'distributions', //la tabla a la que ser quiere unir
+            localField: 'distributionId', //seria la clave a la que ser referenciar casi siempre seria id
+            foreignField: '_id', // esta seria la equivalente a la clave foranea
+            as: 'distributions',
+          },
+        },
+        { $unwind: '$distributions' },
       ]);
-      return user;
+
+      return users;
     } catch (error) {
       throw new HttpException(
         {
@@ -39,7 +58,7 @@ export class UsersService {
 
   async findOne(id: string): Promise<CreateUserInterface[]> {
     try {
-      const profile = await this.userModel.aggregate([
+      const user = await this.userModel.aggregate([
         {
           $match: { _id: new mongoose.Types.ObjectId(id) },
         },
@@ -53,8 +72,28 @@ export class UsersService {
           },
         },
         { $unwind: '$country' },
+
+        {
+          $lookup: {
+            from: 'sentimentals', //la tabla a la que ser quiere unir
+            localField: 'sentimentalId', //seria la clave a la que ser referenciar casi siempre seria id
+            foreignField: '_id', // esta seria la equivalente a la clave foranea
+            as: 'sentimentals',
+          },
+        },
+        { $unwind: '$sentimentals' },
+
+        {
+          $lookup: {
+            from: 'distributions', //la tabla a la que ser quiere unir
+            localField: 'distributionId', //seria la clave a la que ser referenciar casi siempre seria id
+            foreignField: '_id', // esta seria la equivalente a la clave foranea
+            as: 'distributions',
+          },
+        },
+        { $unwind: '$distributions' },
       ]);
-      return profile;
+      return user;
     } catch (error) {
       throw new HttpException(
         {
