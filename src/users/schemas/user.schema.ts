@@ -25,7 +25,7 @@ export class User {
   birthday: Date;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Country.name })
-  country: string;
+  countryId: string;
 
   @Prop({ default: new Date(Date.now()) })
   createdAt: Date;
