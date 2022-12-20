@@ -47,7 +47,7 @@ export class UsersService {
         {
           $lookup: {
             from: 'countries', //la tabla a la que ser quiere unir
-            localField: 'pais', //seria la clave a la que ser referenciar casi siempre seria id
+            localField: 'countryId', //seria la clave a la que ser referenciar casi siempre seria id
             foreignField: '_id', // esta seria la equivalente a la clave foranea
             as: 'country',
           },

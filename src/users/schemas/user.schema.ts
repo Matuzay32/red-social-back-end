@@ -16,16 +16,16 @@ export class User {
   email: string;
 
   @Prop({ required: true })
-  nombre: string;
+  name: string;
 
   @Prop({ required: true })
-  apellido: string;
+  lastName: string;
 
   @Prop({ default: new Date(Date.now()) })
-  fechaNacimiento: Date;
+  birthday: Date;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Country.name })
-  pais: string;
+  country: string;
 
   @Prop({ default: new Date(Date.now()) })
   createdAt: Date;

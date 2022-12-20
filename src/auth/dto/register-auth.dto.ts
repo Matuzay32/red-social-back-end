@@ -18,19 +18,19 @@ export class RegisterAuthDto extends PartialType(LoginAuthDto) {
 
   @IsNotEmpty()
   @ApiProperty()
-  nombre: String;
+  name: String;
 
   @IsNotEmpty()
   @ApiProperty()
-  apellido: String;
+  lastName: String;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsDate()
   @Type(() => Date)
-  fechaNacimiento: Date;
+  birthday: Date;
 
   @ApiProperty()
   @IsNotEmpty()
-  pais: String;
+  countryId: String;
 }
