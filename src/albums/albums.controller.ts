@@ -40,12 +40,12 @@ export class AlbumsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.albumsService.findOne(+id);
+    return this.albumsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAlbumDto: UpdateAlbumDto) {
-    return this.albumsService.update(+id, updateAlbumDto);
+    return this.albumsService.update(id, updateAlbumDto);
   }
 
   @Delete(':id')
