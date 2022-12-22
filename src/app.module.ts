@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { CountrysModule } from './countrys/countrys.module';
 import { DistributionsModule } from './distributions/distributions.module';
 import { SentimentalModule } from './sentimental/sentimental.module';
+import { AlbumsModule } from './albums/albums.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { SentimentalModule } from './sentimental/sentimental.module';
     CountrysModule,
     DistributionsModule,
     SentimentalModule,
+    AlbumsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
