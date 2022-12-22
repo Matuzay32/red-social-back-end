@@ -16,6 +16,7 @@ async function bootstrap() {
     .addTag('sentimental')
     .addTag('auth')
     .addTag('distributions')
+    .addTag('albums')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
