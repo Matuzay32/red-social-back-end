@@ -4,7 +4,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 import { Distribution } from 'src/distributions/schemas/distribution.schema';
 import { User } from 'src/users/schemas/user.schema';
-@Schema()
+@Schema({ versionKey: false })
 export class Album {
   @Prop({ required: true, default: new Date(Date.now()) })
   title: String;

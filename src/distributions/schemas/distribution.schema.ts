@@ -3,7 +3,7 @@ import { HydratedDocument } from 'mongoose';
 
 export type DistributionDocument = HydratedDocument<Distribution>;
 
-@Schema()
+@Schema({ versionKey: false })
 export class Distribution {
   @Prop({ required: true })
   name: string;

@@ -4,7 +4,7 @@ import { User } from 'src/users/schemas/user.schema';
 
 export type CountryDocument = HydratedDocument<Country>;
 
-@Schema()
+@Schema({ versionKey: false })
 export class Country {
   @Prop({ required: true, unique: true })
   name: string;

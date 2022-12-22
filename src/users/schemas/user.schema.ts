@@ -6,7 +6,7 @@ import { Sentimental } from 'src/sentimental/schemas/sentimental.entity';
 
 export type UserDocument = HydratedDocument<User>;
 
-@Schema()
+@Schema({ versionKey: false })
 export class User {
   @Prop({ required: true })
   username: string;

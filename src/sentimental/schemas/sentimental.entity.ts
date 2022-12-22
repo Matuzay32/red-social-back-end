@@ -3,7 +3,7 @@ import { HydratedDocument } from 'mongoose';
 
 export type SentimentalDocument = HydratedDocument<Sentimental>;
 
-@Schema()
+@Schema({ versionKey: false })
 export class Sentimental {
   @Prop({ required: true, default: 'soltero' })
   name: string;
