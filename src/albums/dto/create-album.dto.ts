@@ -8,7 +8,7 @@ export class CreateAlbumDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  content: String[];
+  content: string[];
 
   @IsNotEmpty()
   @ApiProperty()
