@@ -23,25 +23,27 @@ export class UsersService {
         },
         { $unwind: '$country' },
 
+        { $project: { username: 0, password: 0 } },
+
         {
           $lookup: {
             from: 'sentimentals', //la tabla a la que ser quiere unir
             localField: 'sentimentalId', //seria la clave a la que ser referenciar casi siempre seria id
             foreignField: '_id', // esta seria la equivalente a la clave foranea
-            as: 'sentimentals',
+            as: 'sentimentalSituation',
           },
         },
-        { $unwind: '$sentimentals' },
+        { $unwind: '$sentimentalSituation' },
 
         {
           $lookup: {
             from: 'distributions', //la tabla a la que ser quiere unir
             localField: 'distributionId', //seria la clave a la que ser referenciar casi siempre seria id
             foreignField: '_id', // esta seria la equivalente a la clave foranea
-            as: 'distributions',
+            as: 'perfil',
           },
         },
-        { $unwind: '$distributions' },
+        { $unwind: '$perfil' },
       ]);
 
       return users;
@@ -73,25 +75,27 @@ export class UsersService {
         },
         { $unwind: '$country' },
 
+        { $project: { username: 0, password: 0 } },
+
         {
           $lookup: {
             from: 'sentimentals', //la tabla a la que ser quiere unir
             localField: 'sentimentalId', //seria la clave a la que ser referenciar casi siempre seria id
             foreignField: '_id', // esta seria la equivalente a la clave foranea
-            as: 'sentimentals',
+            as: 'sentimentalSituation',
           },
         },
-        { $unwind: '$sentimentals' },
+        { $unwind: '$sentimentalSituation' },
 
         {
           $lookup: {
             from: 'distributions', //la tabla a la que ser quiere unir
             localField: 'distributionId', //seria la clave a la que ser referenciar casi siempre seria id
             foreignField: '_id', // esta seria la equivalente a la clave foranea
-            as: 'distributions',
+            as: 'perfil',
           },
         },
-        { $unwind: '$distributions' },
+        { $unwind: '$perfil' },
       ]);
       return user;
     } catch (error) {
