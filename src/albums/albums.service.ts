@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
 import { Album, AlbumDocument } from './schemas/album.schema';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class AlbumsService {
