@@ -122,7 +122,7 @@ export class AlbumsService {
 
   async update(id: string, updateAlbumDto: UpdateAlbumDto) {
     try {
-      return this.albumModel.findByIdAndRemove(id, updateAlbumDto);
+      return this.albumModel.findByIdAndUpdate(id, updateAlbumDto);
     } catch (error) {
       throw new HttpException(
         { reason: `IMPOSIBLE TO FIND THE ALBUM with id  ${id} ` },
@@ -131,7 +131,7 @@ export class AlbumsService {
     }
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     try {
       return this.albumModel.findByIdAndDelete(id);
     } catch (error) {
