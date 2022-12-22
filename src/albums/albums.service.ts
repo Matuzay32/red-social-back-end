@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpStatus, HttpException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateAlbumDto } from './dto/create-album.dto';
@@ -13,11 +13,27 @@ export class AlbumsService {
   ) {}
 
   async create(createAlbumDto: CreateAlbumDto) {
-    return 'This action adds a new album';
+    try {
+      const album = await this.albumModel.create(createAlbumDto);
+      return album;
+    } catch (error) {
+      throw new HttpException(
+        { reason: 'IMPOSIBLE TO CREATE THE ALBUM' },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
   async findAll() {
-    return `This action returns all albums`;
+    try {
+      const album = await this.albumModel.find({});
+      return album;
+    } catch (error) {
+      throw new HttpException(
+        { reason: 'IMPOSIBLE TO FIND THE ALBUMS' },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
   async findOne(id: number) {
