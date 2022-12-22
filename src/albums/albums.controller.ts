@@ -79,7 +79,7 @@ export class AlbumsController {
   )
   uploadFiles(@UploadedFiles() files: Array<any>) {
     return files.map((item) => {
-      return { nombre: item.filename };
+      return item.filename;
     });
   }
 

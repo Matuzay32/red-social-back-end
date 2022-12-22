@@ -26,8 +26,42 @@ export class AlbumsService {
 
   async findAll() {
     try {
-      const album = await this.albumModel.find({});
-      return album;
+      const albums = await this.albumModel.aggregate([
+        { $project: { __v: 0 } },
+        {
+          $lookup: {
+            from: 'distributions', //la tabla a la que ser quiere unir
+            localField: 'distributionId', //seria la clave a la que ser referenciar casi siempre seria id
+            foreignField: '_id', // esta seria la equivalente a la clave foranea
+            as: 'perfil',
+          },
+        },
+        { $unwind: '$perfil' },
+        {
+          $lookup: {
+            from: 'users', //la tabla a la que ser quiere unir
+            localField: 'userId', //seria la clave a la que ser referenciar casi siempre seria id
+            foreignField: '_id', // esta seria la equivalente a la clave foranea
+            as: 'user',
+          },
+        },
+        { $unwind: '$user' },
+
+        {
+          $project: {
+            user: {
+              password: 0,
+              username: 0,
+              countryId: 0,
+              sentimentalId: 0,
+              distributionId: 0,
+              isAdmin: 0,
+              __v: 0,
+            },
+          },
+        },
+      ]);
+      return albums;
     } catch (error) {
       throw new HttpException(
         { reason: 'IMPOSIBLE TO FIND THE ALBUMS' },
