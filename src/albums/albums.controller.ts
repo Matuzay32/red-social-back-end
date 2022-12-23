@@ -13,7 +13,13 @@ import {
   Res,
 } from '@nestjs/common';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiConsumes,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { join } from 'path';
 import { of } from 'rxjs';
 import { AlbumsService } from './albums.service';
@@ -53,6 +59,20 @@ export class AlbumsController {
     return this.albumsService.remove(id);
   }
 
+  @ApiBody({
+    required: true,
+    type: 'multipart/form-data',
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  @ApiConsumes('multipart/form-data')
   @Post('files')
   @UseInterceptors(
     AnyFilesInterceptor({
@@ -83,10 +103,9 @@ export class AlbumsController {
     });
   }
 
-  @Get('uploads/:imagename')
-  findProfileImage(@Param() params, @Res() res) {
-    const { imagename } = params;
-
-    return of(res.sendFile(join(process.cwd(), `uploads/${imagename}`)));
+  @Get('uploads/:id')
+  @ApiResponse({ type: Buffer })
+  findProfileImage(@Param('id') id: string, @Res() res) {
+    return of(res.sendFile(join(process.cwd(), `uploads/${id}`)));
   }
 }
