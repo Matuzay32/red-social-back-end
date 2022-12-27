@@ -102,7 +102,7 @@ export class UsersService {
       throw new HttpException(
         {
           status: HttpStatus.NOT_FOUND,
-          error: `No fue posible de encontrar el usuario con el id ${id}`,
+          error: `IMPOSIBLE TO FIND THE USER WITH ID #${id} `,
         },
         HttpStatus.NOT_FOUND,
       );
@@ -119,7 +119,7 @@ export class UsersService {
       throw new HttpException(
         {
           status: HttpStatus.NOT_FOUND,
-          error: `No fue posible de encontrar el usuario con el id ${id}`,
+          error: `IMPOSIBLE TO UPDATE THE USER WITH ID #${id} `,
         },
         HttpStatus.NOT_FOUND,
       );
@@ -133,7 +133,7 @@ export class UsersService {
       throw new HttpException(
         {
           status: HttpStatus.NOT_FOUND,
-          error: `No fue posible de encontrar el usuario con el id ${id}`,
+          error: `IMPOSIBLE TO DELETE THE USER WITH ID #${id} `,
         },
         HttpStatus.NOT_FOUND,
       );

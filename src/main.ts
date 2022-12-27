@@ -11,6 +11,7 @@ async function bootstrap() {
     .setTitle('Red social documentacion')
     .setDescription('Esta api simula una red social')
     .setVersion('1.0')
+    .addTag('images')
     .addTag('users')
     .addTag('countrys')
     .addTag('sentimental')

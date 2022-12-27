@@ -9,6 +9,7 @@ import { CountrysModule } from './countrys/countrys.module';
 import { DistributionsModule } from './distributions/distributions.module';
 import { SentimentalModule } from './sentimental/sentimental.module';
 import { AlbumsModule } from './albums/albums.module';
+import { ImagesModule } from './images/images.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { AlbumsModule } from './albums/albums.module';
     DistributionsModule,
     SentimentalModule,
     AlbumsModule,
+    ImagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
