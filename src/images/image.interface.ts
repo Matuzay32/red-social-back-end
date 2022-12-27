@@ -3,9 +3,9 @@ export interface ImageInterface {
 
   title: String;
 
-  content: String;
+  userId: String;
 
-  userId: string;
+  distributionId: String;
 
-  distributionId: string;
+  albumId: String;
 }

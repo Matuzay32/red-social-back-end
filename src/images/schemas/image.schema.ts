@@ -2,6 +2,7 @@ import mongoose, { HydratedDocument, mongo } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { User } from 'src/users/schemas/user.schema';
 import { Distribution } from 'src/distributions/schemas/distribution.schema';
+import { Album } from 'src/albums/schemas/album.schema';
 export type ImageDocument = HydratedDocument<Image>;
 
 @Schema()
@@ -12,9 +13,6 @@ export class Image {
   @Prop()
   title: String;
 
-  @Prop()
-  content: String;
-
   @Prop({ default: new Date(Date.now()) })
   createdAt: Date;
 
@@ -23,6 +21,9 @@ export class Image {
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Distribution.name })
   distributionId: string;
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Album.name })
+  albumId: string;
 }
 
 export const ImageSchema = SchemaFactory.createForClass(Image);

@@ -11,11 +11,11 @@ export class CreateImageDto {
   title: String;
 
   @ApiProperty()
-  content: String;
-
-  @ApiProperty()
   userId: string;
 
   @ApiProperty()
   distributionId: string;
+
+  @ApiProperty()
+  albumId: string;
 }
