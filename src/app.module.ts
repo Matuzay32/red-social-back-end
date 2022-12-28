@@ -11,6 +11,7 @@ import { SentimentalModule } from './sentimental/sentimental.module';
 import { AlbumsModule } from './albums/albums.module';
 import { ImagesModule } from './images/images.module';
 import { PostsModule } from './posts/posts.module';
+import { ComentsModule } from './coments/coments.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { PostsModule } from './posts/posts.module';
     AlbumsModule,
     ImagesModule,
     PostsModule,
+    ComentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
