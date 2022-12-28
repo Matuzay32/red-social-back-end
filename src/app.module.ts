@@ -10,6 +10,7 @@ import { DistributionsModule } from './distributions/distributions.module';
 import { SentimentalModule } from './sentimental/sentimental.module';
 import { AlbumsModule } from './albums/albums.module';
 import { ImagesModule } from './images/images.module';
+import { PostsModule } from './posts/posts.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ImagesModule } from './images/images.module';
     SentimentalModule,
     AlbumsModule,
     ImagesModule,
+    PostsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
