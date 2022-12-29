@@ -11,6 +11,8 @@ async function bootstrap() {
     .setTitle('Red social documentacion')
     .setDescription('Esta api simula una red social, similar a facebook ')
     .setVersion('1.0')
+
+    .addTag('comments')
     .addTag('posts')
     .addTag('images')
     .addTag('users')
