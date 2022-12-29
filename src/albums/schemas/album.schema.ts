@@ -3,6 +3,7 @@ export type AlbumDocument = HydratedDocument<Album>;
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 import { Distribution } from 'src/distributions/schemas/distribution.schema';
+import { Comment } from 'src/comments/schemas/comment.schemas';
 import { User } from 'src/users/schemas/user.schema';
 @Schema({ versionKey: false })
 export class Album {

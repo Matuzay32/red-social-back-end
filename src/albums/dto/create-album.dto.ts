@@ -17,4 +17,7 @@ export class CreateAlbumDto {
   @IsNotEmpty()
   @ApiProperty()
   distributionId: string;
+
+  @ApiProperty()
+  commentId: string;
 }
