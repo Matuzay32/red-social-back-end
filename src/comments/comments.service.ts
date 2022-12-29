@@ -29,6 +29,31 @@ export class CommentsService {
 
         {
           $lookup: {
+            from: 'albums', // nombre de la colección de referencia
+            localField: 'typeIdRef', // campo en el documento actual
+            foreignField: '_id', // campo en la colección de referencia
+            as: 'albumComments', // nombre del campo de salida
+          },
+        },
+        {
+          $lookup: {
+            from: 'images', // nombre de la colección de referencia
+            localField: 'typeIdRef', // campo en el documento actual
+            foreignField: '_id', // campo en la colección de referencia
+            as: 'imageComments', // nombre del campo de salida
+          },
+        },
+        {
+          $lookup: {
+            from: 'posts', // nombre de la colección de referencia
+            localField: 'typeIdRef', // campo en el documento actual
+            foreignField: '_id', // campo en la colección de referencia
+            as: 'albumPosts', // nombre del campo de salida
+          },
+        },
+
+        {
+          $lookup: {
             from: `users`, //la tabla a la que ser quiere unir
             localField: `userId`, //seria la clave a la que ser referenciar casi siempre seria id
             foreignField: `_id`, // esta seria la equivalente a la clave foranea
