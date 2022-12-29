@@ -129,7 +129,7 @@ export class AlbumsService {
       return comments;
     } catch (error) {
       throw new HttpException(
-        { reason: `IMPOSIBLE TO FIND THIS COMMENTS COMMENTS ` },
+        { reason: `IMPOSIBLE TO FIND THIS COMMENTS  ` },
         HttpStatus.BAD_REQUEST,
       );
     }

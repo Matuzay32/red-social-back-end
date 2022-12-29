@@ -49,7 +49,7 @@ export class AlbumsController {
     return this.albumsService.findOne(id);
   }
 
-  @Get(':id')
+  @Get('findAllComments/:id')
   findAllComments(@Param('id') id: string) {
     return this.albumsService.findAllComments(id);
   }
