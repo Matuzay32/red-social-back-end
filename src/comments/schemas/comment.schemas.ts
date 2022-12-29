@@ -15,7 +15,6 @@ export class Comment {
     { type: mongoose.Schema.Types.ObjectId, ref: User.name },
     { type: mongoose.Schema.Types.ObjectId, ref: Album.name },
     { type: mongoose.Schema.Types.ObjectId, ref: Image.name },
-    { type: mongoose.Schema.Types.ObjectId, ref: User.name },
     { type: mongoose.Schema.Types.ObjectId, ref: Post.name },
   ])
   typeIdRef: ObjectId[];
