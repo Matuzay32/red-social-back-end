@@ -4,12 +4,14 @@ import mongoose, { Model } from 'mongoose';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
 import { Album, AlbumDocument } from './schemas/album.schema';
+import { Comment, DocumentComment } from '../comments/schemas/comment.schemas';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class AlbumsService {
   constructor(
     @InjectModel(Album.name) private albumModel: Model<AlbumDocument>,
+    @InjectModel(Comment.name) private commentModel: Model<DocumentComment>,
   ) {}
 
   async create(createAlbumDto: CreateAlbumDto) {
@@ -115,6 +117,19 @@ export class AlbumsService {
     } catch (error) {
       throw new HttpException(
         { reason: `IMPOSIBLE TO FIND THE ALBUM with id  ${id} ` },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  async findAllComments(id: string) {
+    try {
+      const comments = await this.commentModel.find({ typeIdRef: id });
+
+      return comments;
+    } catch (error) {
+      throw new HttpException(
+        { reason: `IMPOSIBLE TO FIND THIS COMMENTS COMMENTS ` },
         HttpStatus.BAD_REQUEST,
       );
     }

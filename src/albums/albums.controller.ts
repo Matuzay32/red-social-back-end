@@ -49,6 +49,11 @@ export class AlbumsController {
     return this.albumsService.findOne(id);
   }
 
+  @Get(':id')
+  findAllComments(@Param('id') id: string) {
+    return this.albumsService.findAllComments(id);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAlbumDto: UpdateAlbumDto) {
     return this.albumsService.update(id, updateAlbumDto);
