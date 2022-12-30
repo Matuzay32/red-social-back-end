@@ -11,4 +11,7 @@ export class CreatePostDto {
 
   @ApiProperty()
   distributionId: string;
+
+  @ApiProperty()
+  commentId: string;
 }
