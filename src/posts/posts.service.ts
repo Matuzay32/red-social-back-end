@@ -2,9 +2,11 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
 import { DocumentComment, Comment } from 'src/comments/schemas/comment.schemas';
+import { CreatePostIterface } from './create-post.interface';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { Post, PostDocument } from './schemas/post.schema';
+import { CreateCommentInterface } from '../comments/create-comment.interface';
 
 @Injectable()
 export class PostsService {
@@ -14,7 +16,7 @@ export class PostsService {
     @InjectModel(Comment.name) private commentModel: Model<DocumentComment>,
   ) {}
 
-  async create(CreatePostDto: CreatePostDto) {
+  async create(CreatePostDto: CreatePostDto): Promise<CreatePostIterface> {
     try {
       const album = await this.postModel.create(CreatePostDto);
       return album;
@@ -26,7 +28,7 @@ export class PostsService {
     }
   }
 
-  async findAll() {
+  async findAll(): Promise<CreatePostIterface[]> {
     try {
       const albums = await this.postModel.aggregate([
         { $project: { __v: 0 } },
@@ -72,7 +74,7 @@ export class PostsService {
     }
   }
 
-  async findAllComments(id: string) {
+  async findAllComments(id: string): Promise<CreateCommentInterface[]> {
     try {
       const comments = await this.commentModel.find({ typeIdRef: id });
 
@@ -85,7 +87,7 @@ export class PostsService {
     }
   }
 
-  async findOne(id: string) {
+  async findOne(id: string): Promise<CreatePostIterface[]> {
     try {
       const albums = await this.postModel.aggregate([
         {
@@ -135,7 +137,10 @@ export class PostsService {
     }
   }
 
-  async update(id: string, UpdatePostDto: UpdatePostDto) {
+  async update(
+    id: string,
+    UpdatePostDto: UpdatePostDto,
+  ): Promise<CreatePostIterface> {
     try {
       return this.postModel.findByIdAndUpdate(id, UpdatePostDto);
     } catch (error) {
@@ -146,7 +151,7 @@ export class PostsService {
     }
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<CreatePostIterface> {
     try {
       return this.postModel.findByIdAndDelete(id);
     } catch (error) {
