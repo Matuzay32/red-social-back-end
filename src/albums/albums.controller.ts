@@ -27,6 +27,8 @@ import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
 import { diskStorage } from 'multer';
 import { v4 as uuidv4 } from 'uuid';
+import mime from 'mime';
+import fs from 'fs';
 
 @ApiTags('albums')
 @ApiBearerAuth()
@@ -84,12 +86,16 @@ export class AlbumsController {
       storage: diskStorage({
         destination: './uploads',
         filename: (req, file, callback) => {
-          callback(null, `${uuidv4()}.jpg`);
+          const extension = file.originalname
+            .toLowerCase()
+            .match(/(.gif|.png|.jpg|.jpeg|.mp4)$/);
+
+          callback(null, `${uuidv4()}${extension[0]}`);
         },
       }),
       fileFilter: (req, file, callback) => {
         const nameOriginal = file.originalname.toLocaleLowerCase();
-        if (!nameOriginal.match(/(.gif|.png|.jpg|.jpeg)$/)) {
+        if (!nameOriginal.match(/(.gif|.png|.jpg|.jpeg|.mp4)$/)) {
           return callback(
             new HttpVersionNotSupportedException({
               status: HttpStatus.NOT_FOUND,
@@ -108,9 +114,19 @@ export class AlbumsController {
     });
   }
 
+  // @Get('uploads/:id')
+  // @ApiResponse({ type: Buffer })
+  // findProfileImage(@Param('id') id: string, @Res() res) {
+  //   return of(res.sendFile(join(process.cwd(), `uploads/${id}`)));
+  // }
+
   @Get('uploads/:id')
-  @ApiResponse({ type: Buffer })
   findProfileImage(@Param('id') id: string, @Res() res) {
-    return of(res.sendFile(join(process.cwd(), `uploads/${id}`)));
+    const filePath = join(process.cwd(), `uploads/${id}`);
+    const fileType = mime.getType(filePath);
+
+    return of(
+      res.send(fs.readFileSync(filePath), { 'Content-Type': fileType }),
+    );
   }
 }
