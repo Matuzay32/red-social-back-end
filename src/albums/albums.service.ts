@@ -6,6 +6,8 @@ import { UpdateAlbumDto } from './dto/update-album.dto';
 import { Album, AlbumDocument } from './schemas/album.schema';
 import { Comment, DocumentComment } from '../comments/schemas/comment.schemas';
 import { v4 as uuidv4 } from 'uuid';
+import { CreateAlbumInterface } from './create-album.interface';
+import { CreateCommentInterface } from 'src/comments/create-comment.interface';
 
 @Injectable()
 export class AlbumsService {
@@ -14,7 +16,7 @@ export class AlbumsService {
     @InjectModel(Comment.name) private commentModel: Model<DocumentComment>,
   ) {}
 
-  async create(createAlbumDto: CreateAlbumDto) {
+  async create(createAlbumDto: CreateAlbumDto): Promise<CreateAlbumInterface> {
     try {
       const album = await this.albumModel.create(createAlbumDto);
       return album;
@@ -26,7 +28,7 @@ export class AlbumsService {
     }
   }
 
-  async findAll() {
+  async findAll(): Promise<CreateAlbumInterface[]> {
     try {
       const albums = await this.albumModel.aggregate([
         { $project: { __v: 0 } },
@@ -72,7 +74,7 @@ export class AlbumsService {
     }
   }
 
-  async findOne(id: string) {
+  async findOne(id: string): Promise<CreateAlbumInterface[]> {
     try {
       const albums = await this.albumModel.aggregate([
         {
@@ -122,7 +124,7 @@ export class AlbumsService {
     }
   }
 
-  async findAllComments(id: string) {
+  async findAllComments(id: string): Promise<CreateCommentInterface[]> {
     try {
       const comments = await this.commentModel.find({ typeIdRef: id });
 
@@ -135,7 +137,10 @@ export class AlbumsService {
     }
   }
 
-  async update(id: string, updateAlbumDto: UpdateAlbumDto) {
+  async update(
+    id: string,
+    updateAlbumDto: UpdateAlbumDto,
+  ): Promise<CreateAlbumInterface> {
     try {
       return this.albumModel.findByIdAndUpdate(id, updateAlbumDto);
     } catch (error) {
@@ -146,7 +151,7 @@ export class AlbumsService {
     }
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<CreateAlbumInterface> {
     try {
       return this.albumModel.findByIdAndDelete(id);
     } catch (error) {
