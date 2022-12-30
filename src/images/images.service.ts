@@ -51,16 +51,6 @@ export class ImagesService {
         { $unwind: `$user` },
 
         {
-          $lookup: {
-            from: `albums`, //la tabla a la que ser quiere unir
-            localField: `albumId`, //seria la clave a la que ser referenciar casi siempre seria id
-            foreignField: `_id`, // esta seria la equivalente a la clave foranea
-            as: `album`,
-          },
-        },
-        { $unwind: `$album` },
-
-        {
           $project: {
             user: {
               password: 0,

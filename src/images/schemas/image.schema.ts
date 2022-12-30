@@ -21,9 +21,6 @@ export class Image {
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Distribution.name })
   distributionId: string;
-
-  // @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Album.name })
-  // albumId: string;
 }
 
 export const ImageSchema = SchemaFactory.createForClass(Image);
