@@ -33,6 +33,11 @@ export class ImagesController {
     return this.imagesService.findOne(id);
   }
 
+  @Get('findAllComments/:id')
+  findAllComments(@Param('id') id: string) {
+    return this.imagesService.findAllComments(id);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateImageDto: UpdateImageDto) {
     return this.imagesService.update(id, updateImageDto);
