@@ -48,7 +48,7 @@ export class CommentsService {
             from: 'posts', // nombre de la colección de referencia
             localField: 'typeIdRef', // campo en el documento actual
             foreignField: '_id', // campo en la colección de referencia
-            as: 'albumPosts', // nombre del campo de salida
+            as: 'postsComments', // nombre del campo de salida
           },
         },
 
