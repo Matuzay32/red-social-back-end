@@ -76,8 +76,35 @@ export class PostsService {
 
   async findAllComments(id: string): Promise<CreateCommentInterface[]> {
     try {
-      const comments = await this.commentModel.find({ typeIdRef: id });
+      const comments = await this.commentModel.aggregate([
+        {
+          $match: { typeIdRef: new mongoose.Types.ObjectId(id) },
+        },
 
+        {
+          $lookup: {
+            from: `users`, //la tabla a la que ser quiere unir
+            localField: `userId`, //seria la clave a la que ser referenciar casi siempre seria id
+            foreignField: `_id`, // esta seria la equivalente a la clave foranea
+            as: `user`,
+          },
+        },
+        { $unwind: `$user` },
+
+        {
+          $project: {
+            user: {
+              password: 0,
+              username: 0,
+              countryId: 0,
+              sentimentalId: 0,
+              distributionId: 0,
+              isAdmin: 0,
+              __v: 0,
+            },
+          },
+        },
+      ]);
       return comments;
     } catch (error) {
       throw new HttpException(
