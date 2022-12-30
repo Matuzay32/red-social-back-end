@@ -7,5 +7,5 @@ export interface ImageInterface {
 
   distributionId: String;
 
-  albumId: String;
+  // albumId: String;
 }

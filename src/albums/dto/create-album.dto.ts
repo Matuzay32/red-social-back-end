@@ -1,14 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty } from 'class-validator';
+import { ObjectId } from 'mongoose';
 
 export class CreateAlbumDto {
   @ApiProperty()
   @IsNotEmpty()
   title: String;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  content: string[];
 
   @IsNotEmpty()
   @ApiProperty()
@@ -20,4 +17,7 @@ export class CreateAlbumDto {
 
   @ApiProperty()
   commentId: string;
+
+  @ApiProperty()
+  imageId: ObjectId[];
 }

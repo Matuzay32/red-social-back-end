@@ -16,6 +16,6 @@ export class CreateImageDto {
   @ApiProperty()
   distributionId: string;
 
-  @ApiProperty()
-  albumId: string;
+  // @ApiProperty()
+  // albumId: string;
 }

@@ -1,11 +1,13 @@
+import { ObjectId } from 'mongoose';
+
 export interface CreateAlbumInterface {
   title: String;
-
-  content: String[];
 
   userId: String;
 
   distributionId: String;
+
+  imageId: ObjectId[];
 
   createdAt: Date;
 }
