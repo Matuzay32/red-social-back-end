@@ -1,13 +1,18 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
+import { DocumentComment, Comment } from 'src/comments/schemas/comment.schemas';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { Post, PostDocument } from './schemas/post.schema';
 
 @Injectable()
 export class PostsService {
-  constructor(@InjectModel(Post.name) private postModel: Model<PostDocument>) {}
+  constructor(
+    @InjectModel(Post.name) private postModel: Model<PostDocument>,
+
+    @InjectModel(Comment.name) private commentModel: Model<DocumentComment>,
+  ) {}
 
   async create(CreatePostDto: CreatePostDto) {
     try {
@@ -62,6 +67,19 @@ export class PostsService {
     } catch (error) {
       throw new HttpException(
         { reason: `IMPOSIBLE TO FIND THE POSTS` },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  async findAllComments(id: string) {
+    try {
+      const comments = await this.commentModel.find({ typeIdRef: id });
+
+      return comments;
+    } catch (error) {
+      throw new HttpException(
+        { reason: `IMPOSIBLE TO FIND THIS COMMENTS ` },
         HttpStatus.BAD_REQUEST,
       );
     }
