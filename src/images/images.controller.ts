@@ -7,15 +7,27 @@ import {
   Param,
   Delete,
   UseInterceptors,
+  Res,
+  UploadedFiles,
+  HttpVersionNotSupportedException,
+  HttpStatus,
 } from '@nestjs/common';
 import { ImagesService } from './images.service';
 import { CreateImageDto } from './dto/create-image.dto';
 import { UpdateImageDto } from './dto/update-image.dto';
-import { ApiTags, ApiBearerAuth, ApiConsumes } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiBearerAuth,
+  ApiConsumes,
+  ApiResponse,
+  ApiBody,
+} from '@nestjs/swagger';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 
 import { v4 as uuidv4 } from 'uuid';
+import { of } from 'rxjs';
+import { join } from 'path';
 
 @ApiTags('images')
 @ApiBearerAuth()
