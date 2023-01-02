@@ -18,8 +18,8 @@ export class PostsService {
 
   async create(CreatePostDto: CreatePostDto): Promise<CreatePostIterface> {
     try {
-      const album = await this.postModel.create(CreatePostDto);
-      return album;
+      const post = await this.postModel.create(CreatePostDto);
+      return post;
     } catch (error) {
       throw new HttpException(
         { reason: `IMPOSIBLE TO CREATE THE POST` },

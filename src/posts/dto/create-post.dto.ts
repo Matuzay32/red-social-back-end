@@ -1,10 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { ObjectId } from 'mongoose';
 export class CreatePostDto {
   @ApiProperty()
   title: string;
 
   @ApiProperty()
-  content: string[];
+  imageId: (ObjectId | String)[];
 
   @ApiProperty()
   userId: string;

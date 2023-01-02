@@ -16,7 +16,7 @@ export class Post {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Distribution.name })
   distributionId: string;
 
-  @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: Image.name }])
+  @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'images' }])
   imageId: (ObjectId | string)[];
 
   @Prop({ default: new Date(Date.now()) })
