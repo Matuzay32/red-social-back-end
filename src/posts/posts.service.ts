@@ -30,8 +30,17 @@ export class PostsService {
 
   async findAll(): Promise<CreatePostIterface[]> {
     try {
-      const albums = await this.postModel.aggregate([
+      const posts = await this.postModel.aggregate([
         { $project: { __v: 0 } },
+
+        {
+          $lookup: {
+            from: 'images', // nombre de la colección de referencia
+            localField: 'imageId', // campo en el documento actual
+            foreignField: '_id', // campo en la colección de referencia
+            as: 'postPhotos', // nombre del campo de salida
+          },
+        },
         {
           $lookup: {
             from: `distributions`, //la tabla a la que ser quiere unir
@@ -65,7 +74,7 @@ export class PostsService {
           },
         },
       ]);
-      return albums;
+      return posts;
     } catch (error) {
       throw new HttpException(
         { reason: `IMPOSIBLE TO FIND THE POSTS` },
@@ -116,12 +125,21 @@ export class PostsService {
 
   async findOne(id: string): Promise<CreatePostIterface[]> {
     try {
-      const albums = await this.postModel.aggregate([
+      const post = await this.postModel.aggregate([
         {
           $match: { _id: new mongoose.Types.ObjectId(id) },
         },
 
         { $project: { __v: 0 } },
+
+        {
+          $lookup: {
+            from: 'images', // nombre de la colección de referencia
+            localField: 'imageId', // campo en el documento actual
+            foreignField: '_id', // campo en la colección de referencia
+            as: 'postPhotos', // nombre del campo de salida
+          },
+        },
         {
           $lookup: {
             from: `distributions`, //la tabla a la que ser quiere unir
@@ -155,7 +173,7 @@ export class PostsService {
           },
         },
       ]);
-      return albums;
+      return post;
     } catch (error) {
       throw new HttpException(
         { reason: `IMPOSIBLE TO FIND THE POST with id  ${id} ` },
