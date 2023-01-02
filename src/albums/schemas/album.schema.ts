@@ -8,7 +8,7 @@ import { User } from 'src/users/schemas/user.schema';
 import { Image } from 'src/images/schemas/image.schema';
 @Schema({ versionKey: false })
 export class Album {
-  @Prop({ required: true, default: new Date(Date.now()) })
+  @Prop({ required: true })
   title: String;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: User.name })
