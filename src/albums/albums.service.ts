@@ -89,8 +89,14 @@ export class AlbumsService {
         {
           $match: { _id: new mongoose.Types.ObjectId(id) },
         },
-
-        { $project: { __v: 0 } },
+        {
+          $lookup: {
+            from: 'images', // nombre de la colección de referencia
+            localField: 'imageId', // campo en el documento actual
+            foreignField: '_id', // campo en la colección de referencia
+            as: 'albumPhotos', // nombre del campo de salida
+          },
+        },
         {
           $lookup: {
             from: `distributions`, //la tabla a la que ser quiere unir
