@@ -12,6 +12,7 @@ import { AlbumsModule } from './albums/albums.module';
 import { ImagesModule } from './images/images.module';
 import { PostsModule } from './posts/posts.module';
 import { CommentsModule } from './comments/comments.module';
+import { FriendsModule } from './friends/friends.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { CommentsModule } from './comments/comments.module';
     ImagesModule,
     PostsModule,
     CommentsModule,
+    FriendsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
