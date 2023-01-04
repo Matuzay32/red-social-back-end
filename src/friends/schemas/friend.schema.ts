@@ -5,10 +5,10 @@ export type FriendDocument = HydratedDocument<Friend>;
 
 @Schema({ versionKey: false })
 export class Friend {
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'user' })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'users' })
   senderId: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'user' })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'users' })
   receptorId: string;
 
   @Prop({ type: Boolean, default: false })

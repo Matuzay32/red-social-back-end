@@ -13,6 +13,7 @@ async function bootstrap() {
     .setVersion('1.0')
 
     .addTag('comments')
+    .addTag('friends')
     .addTag('posts')
     .addTag('images')
     .addTag('users')

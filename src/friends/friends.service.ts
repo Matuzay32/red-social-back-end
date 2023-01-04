@@ -1,6 +1,6 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { CreateFriendDto } from './dto/create-friend.dto';
 import { UpdateFriendDto } from './dto/update-friend.dto';
 import { Friend, FriendDocument } from './schemas/friend.schema';
@@ -19,25 +19,111 @@ export class FriendsService {
       console.log(error);
 
       throw new HttpException(
-        { error: 'Sorry no posible to created a friend' },
+        { error: 'SORRY IT NOT  POSIBLE TO CREATED A FFRIEND' },
         HttpStatus.BAD_REQUEST,
       );
     }
   }
 
   findAll() {
-    return `This action returns all friends`;
+    try {
+      const friend = this.modelFriend.aggregate([
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'senderId',
+            foreignField: '_id',
+            as: 'friendsSender',
+          },
+        },
+
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'senderId',
+            foreignField: '_id',
+            as: 'receptorFriend',
+          },
+        },
+        { $unwind: '$receptorFriend' },
+      ]);
+
+      return friend;
+    } catch (error) {
+      console.log(error);
+
+      throw new HttpException(
+        { error: 'ITS NOT POSIBLE TO FIND ALL FRIENDS' },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} friend`;
+  findOne(id: string) {
+    try {
+      const friend = this.modelFriend.aggregate([
+        {
+          $match: { _id: new mongoose.Types.ObjectId(id) },
+        },
+
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'senderId',
+            foreignField: '_id',
+            as: 'friendsSender',
+          },
+        },
+
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'senderId',
+            foreignField: '_id',
+            as: 'receptorFriend',
+          },
+        },
+        { $unwind: '$receptorFriend' },
+      ]);
+
+      return friend;
+    } catch (error) {
+      console.log(error);
+
+      throw new HttpException(
+        { error: `ITS NOT POSIBLE TO FIND FRIEND WITH ID #${id}` },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
-  update(id: number, updateFriendDto: UpdateFriendDto) {
-    return `This action updates a #${id} friend`;
+  update(id: string, updateFriendDto: UpdateFriendDto) {
+    try {
+      const friend = this.modelFriend.findByIdAndUpdate(id, updateFriendDto);
+
+      return friend;
+    } catch (error) {
+      console.log(error);
+
+      throw new HttpException(
+        { error: `ITS NOT POSIBLE TO FIND FRIEND WITH ID #${id}` },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} friend`;
+  remove(id: string) {
+    try {
+      const friend = this.modelFriend.findByIdAndDelete(id);
+
+      return friend;
+    } catch (error) {
+      console.log(error);
+
+      throw new HttpException(
+        { error: `ITS NOT POSIBLE TO FIND FRIEND WITH ID #${id}` },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 }
