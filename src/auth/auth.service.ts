@@ -36,14 +36,28 @@ export class AuthService {
     if (!checkPass)
       throw new HttpException('PASSWORD_INCORRECT', HttpStatus.FORBIDDEN);
 
-    const payload = { id: findUser._id, username: findUser.username };
+    const payload = {
+      id: findUser._id,
+      username: findUser.username,
+      email: findUser.email,
+      name: findUser.name,
+      lastname: findUser.lastName,
+      birthday: findUser.birthday,
+      countryId: findUser.countryId,
+      sentimentalId: findUser.sentimentalId,
+      distributionId: findUser.distributionId,
+      isAdmin: findUser.isAdmin,
+    };
 
     const token = await this.jwtServie.sign(payload);
 
     const data = {
-      user: findUser,
+      // user: findUser,
       token,
     };
+
+    console.log(data);
+
     return data;
   }
 }
