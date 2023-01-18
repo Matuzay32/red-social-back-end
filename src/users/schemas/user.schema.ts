@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 import { Country } from 'src/countrys/schemas/country.schemas';
 import { Distribution } from 'src/distributions/schemas/distribution.schema';
+import { Gender } from 'src/gender/schemas/gender.schema';
 import { Sentimental } from 'src/sentimental/schemas/sentimental.entity';
 
 export type UserDocument = HydratedDocument<User>;
@@ -28,6 +29,9 @@ export class User {
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Country.name })
   countryId: string;
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Gender.name })
+  genderId: string;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Sentimental.name })
   sentimentalId: string;

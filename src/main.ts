@@ -13,6 +13,7 @@ async function bootstrap() {
     .setDescription('Esta api simula una red social, similar a facebook ')
     .setVersion('1.0')
 
+    .addTag('gender')
     .addTag('comments')
     .addTag('friends')
     .addTag('posts')

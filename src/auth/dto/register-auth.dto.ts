@@ -36,6 +36,10 @@ export class RegisterAuthDto extends PartialType(LoginAuthDto) {
 
   @ApiProperty()
   @IsNotEmpty()
+  genderId: String;
+
+  @ApiProperty()
+  @IsNotEmpty()
   sentimentalId: string;
 
   @ApiProperty()

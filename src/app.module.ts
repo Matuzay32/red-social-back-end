@@ -13,6 +13,7 @@ import { ImagesModule } from './images/images.module';
 import { PostsModule } from './posts/posts.module';
 import { CommentsModule } from './comments/comments.module';
 import { FriendsModule } from './friends/friends.module';
+import { GenderModule } from './gender/gender.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { FriendsModule } from './friends/friends.module';
     PostsModule,
     CommentsModule,
     FriendsModule,
+    GenderModule,
   ],
   controllers: [AppController],
   providers: [AppService],

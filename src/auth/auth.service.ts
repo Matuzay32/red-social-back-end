@@ -1,4 +1,4 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus, Res } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from 'src/users/schemas/user.schema';
@@ -17,10 +17,29 @@ export class AuthService {
 
   //Usamos bcrypt para encryptar la password
   async register(userObject: RegisterAuthDto) {
-    const { password } = userObject;
+    const { password, email } = userObject;
     const plainPass = await hash(password, 10);
     const usuarioEncriptado = { ...userObject, password: plainPass };
-    return this.userModel.create(usuarioEncriptado);
+
+    const findUser = await this.userModel.findOne({ email });
+    if (!findUser) {
+      await this.userModel.create(usuarioEncriptado);
+      throw new HttpException(
+        {
+          status: HttpStatus.OK,
+          message: 'Usuario creado exitosamente',
+        },
+        200,
+      );
+    } else {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_FOUND,
+          message: 'El usuario ya existe',
+        },
+        404,
+      );
+    }
   }
 
   //Comparamos el usuario con el que tenemos en la base de datos
@@ -55,8 +74,6 @@ export class AuthService {
       // user: findUser,
       token,
     };
-
-    console.log(data);
 
     return data;
   }
