@@ -43,17 +43,53 @@ export class AuthService {
   }
 
   //Comparamos el usuario con el que tenemos en la base de datos
+  // async login(userObject: LoginAuthDto) {
+  //   const { email, password } = userObject;
+  //   const findUser = await this.userModel.findOne({ email });
+
+  //   if (!findUser)
+  //     throw new HttpException('USER_NOT_FOUND', HttpStatus.NOT_FOUND);
+
+  //   const checkPass = await compare(password, findUser.password);
+
+  //   if (!checkPass)
+  //     throw new HttpException('PASSWORD_INCORRECT', HttpStatus.FORBIDDEN);
+
+  //   const payload = {
+  //     id: findUser._id,
+  //     username: findUser.username,
+  //     email: findUser.email,
+  //     name: findUser.name,
+  //     lastname: findUser.lastName,
+  //     birthday: findUser.birthday,
+  //     countryId: findUser.countryId,
+  //     sentimentalId: findUser.sentimentalId,
+  //     distributionId: findUser.distributionId,
+  //     isAdmin: findUser.isAdmin,
+  //   };
+
+  //   const token = await this.jwtServie.sign(payload);
+
+  //   const data = {
+  //     // user: findUser,
+  //     token,
+  //   };
+
+  //   return data;
+  // }
+
   async login(userObject: LoginAuthDto) {
     const { email, password } = userObject;
     const findUser = await this.userModel.findOne({ email });
 
-    if (!findUser)
+    if (!findUser) {
       throw new HttpException('USER_NOT_FOUND', HttpStatus.NOT_FOUND);
-
+    }
     const checkPass = await compare(password, findUser.password);
 
-    if (!checkPass)
+    if (!checkPass) {
       throw new HttpException('PASSWORD_INCORRECT', HttpStatus.FORBIDDEN);
+    }
 
     const payload = {
       id: findUser._id,
@@ -71,10 +107,12 @@ export class AuthService {
     const token = await this.jwtServie.sign(payload);
 
     const data = {
-      // user: findUser,
       token,
     };
 
-    return data;
+    return {
+      statusCode: HttpStatus.OK,
+      data: data,
+    };
   }
 }
